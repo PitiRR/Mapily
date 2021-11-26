@@ -7,10 +7,11 @@
 2. Please don't make my fuck ups and create branch like this:
 	```git checkout -b [branch_name] origin/main ```
 This way you don't need to pull (get newest changes from remote (Github), and you are automatically switched to the branch (to see all branches: ```git branch -l```
-3. One branch - one feature. After you're done adding stuff, and the PR is merged to main, remove the branch please.
+3. One branch - one feature - one commit. After you're done adding stuff, and the PR is merged to main, remove the branch please.
+4. To update changes in your branch after ```git add```; ```git commit --amend --no-edit```. To push: ```git push --force```. 
 # How to run
 ## Prerequisites:
-1. A spotify account
+1. A Spotify account
 ## Running:
 1. Clone the repistory with ```git clone https://github.com/PitiRR/Mapily.git``
 2. Update and download npm with ```npm update```
