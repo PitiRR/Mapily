@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { getTop50 } from '../actions/result.js'
 
 const SearchForm = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,17 +21,6 @@ const SearchForm = (props) => {
       setErrorMsg('Please enter a search term.');
     }
   };
-
-  const get50 = (event) => {
-   //TODO:
-    if (event == null) {
-      //global
-    }
-    else {
-      //search playlist by country tag. FR = KEY, 37i9dQZEVXbIPWwFssbupI = VALUE
-    }
-  };
-
   return (
     <div>
       <Form onSubmit={handleSearch}>

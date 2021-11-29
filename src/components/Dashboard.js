@@ -4,7 +4,8 @@ import {
   initiateGetResult,
   initiateLoadMoreAlbums,
   initiateLoadMorePlaylist,
-  initiateLoadMoreArtists
+  initiateLoadMoreArtists,
+  getTop50
 } from '../actions/result';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -24,6 +25,10 @@ const Dashboard = (props) => {
       props.dispatch(initiateGetResult(searchTerm)).then(() => {
         setIsLoading(false);
         setSelectedCategory('albums');
+      // props.dispatch(getTop50(searchTerm).then(() => {
+      //   setIsLoading(false);
+      //   setSelectedCategory('playlists');
+      // }))
       });
     } else {
       history.push({
