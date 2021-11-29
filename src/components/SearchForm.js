@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { getTop50 } from '../actions/result.js'
 
 const SearchForm = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,13 +22,6 @@ const SearchForm = (props) => {
     }
   };
 
-  const getGlobal50 = (event) => {
-   //TODO:
-   //1. Download .csv from https://spotifycharts.com/regional/global/daily/latest/download, programatically into a dir
-   //2. Parse csv into JSON
-   //3. parse results into rendering
-  };
-
   return (
     <div>
       <Form onSubmit={handleSearch}>
@@ -46,8 +40,8 @@ const SearchForm = (props) => {
         <Button variant="info" type="submit">
           Search
         </Button>
-        <Button variant="info" type="submit" href="https://spotifycharts.com/regional/global/daily/latest/download" onClick={getGlobal50}>
-          Get Global 50
+        <Button variant="info" type="submit" onClick={getTop50("Top 50 - France")}>
+          Get France Top 50
         </Button>
       </Form>
     </div>

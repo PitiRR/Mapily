@@ -1,4 +1,3 @@
-
 import {
   SET_ALBUMS,
   ADD_ALBUMS,
@@ -50,6 +49,22 @@ export const initiateGetResult = (searchTerm) => {
       const { albums, artists, playlists } = result;
       dispatch(setAlbums(albums));
       dispatch(setArtists(artists));
+      return dispatch(setPlayList(playlists));
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+};
+
+export const getTop50 = (searchTerm) => {
+  return async (dispatch) => {
+    try {
+      const API_URL = `https://api.spotify.com/v1/search?query=${encodeURIComponent(
+        'Top 50 - France'
+      )}&type=playlist`;
+      const result = await get(API_URL);
+      console.log(result);
+      const { playlists } = result;
       return dispatch(setPlayList(playlists));
     } catch (error) {
       console.log('error', error);
