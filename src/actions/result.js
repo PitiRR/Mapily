@@ -1,4 +1,3 @@
-
 import {
   SET_ALBUMS,
   ADD_ALBUMS,

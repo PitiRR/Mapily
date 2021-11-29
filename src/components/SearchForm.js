@@ -21,11 +21,14 @@ const SearchForm = (props) => {
     }
   };
 
-  const getGlobal50 = (event) => {
+  const get50 = (event) => {
    //TODO:
-   //1. Download .csv from https://spotifycharts.com/regional/global/daily/latest/download, programatically into a dir
-   //2. Parse csv into JSON
-   //3. parse results into rendering
+    if (event == null) {
+      //global
+    }
+    else {
+      //search playlist by country tag. FR = KEY, 37i9dQZEVXbIPWwFssbupI = VALUE
+    }
   };
 
   return (
@@ -46,8 +49,8 @@ const SearchForm = (props) => {
         <Button variant="info" type="submit">
           Search
         </Button>
-        <Button variant="info" type="submit" href="https://spotifycharts.com/regional/global/daily/latest/download" onClick={getGlobal50}>
-          Get Global 50
+        <Button variant="info" type="submit" onClick={getTop50("fr")}>
+          Get France Top 50
         </Button>
       </Form>
     </div>
