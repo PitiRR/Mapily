@@ -21,7 +21,6 @@ const SearchForm = (props) => {
       setErrorMsg('Please enter a search term.');
     }
   };
-
   return (
     <div>
       <Form onSubmit={handleSearch}>
@@ -40,7 +39,7 @@ const SearchForm = (props) => {
         <Button variant="info" type="submit">
           Search
         </Button>
-        <Button variant="info" type="submit" onClick={getTop50("Top 50 - France")}>
+        <Button variant="info" type="submit" onClick={getTop50("fr")}>
           Get France Top 50
         </Button>
       </Form>
