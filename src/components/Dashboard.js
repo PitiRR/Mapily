@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import {
-  initiateGetResult,
+//  initiateGetResult,
   initiateLoadMoreAlbums,
   initiateLoadMorePlaylist,
   initiateLoadMoreArtists,
-  getTop50
+  initiateLoadMoreSong,
+  getPlaylistItems
 } from '../actions/result';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -16,20 +17,23 @@ import Loader from './Loader';
 
 const Dashboard = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('albums');
+  const [selectedCategory, setSelectedCategory] = useState('song');
   const { isValidSession, history } = props;
 
   const handleSearch = (searchTerm) => {
     if (isValidSession()) {
       setIsLoading(true);
-      props.dispatch(initiateGetResult(searchTerm)).then(() => {
-        setIsLoading(false);
-        setSelectedCategory('albums');
-      // props.dispatch(getTop50(searchTerm).then(() => {
+      //get songs, albums and playlists based on text query
+      // props.dispatch(initiateGetResult(searchTerm)).then(() => {
       //   setIsLoading(false);
-      //   setSelectedCategory('playlists');
-      // }))
-      });
+      //   setSelectedCategory('albums');
+      //});
+
+      //get playlist items for a specific (trending 50) playlist
+       props.dispatch(getPlaylistItems(searchTerm)).then(() => {
+         setIsLoading(false);
+         setSelectedCategory('song');
+        });
     } else {
       history.push({
         pathname: '/',
@@ -42,7 +46,7 @@ const Dashboard = (props) => {
 
   const loadMore = async (type) => {
     if (isValidSession()) {
-      const { dispatch, albums, artists, playlist } = props;
+      const { dispatch, albums, artists, playlist, song } = props;
       setIsLoading(true);
       switch (type) {
         case 'albums':
@@ -53,6 +57,9 @@ const Dashboard = (props) => {
           break;
         case 'playlist':
           await dispatch(initiateLoadMorePlaylist(playlist.next));
+          break;
+        case 'song':
+          await dispatch(initiateLoadMoreSong(song.next));
           break;
         default:
       }
@@ -71,8 +78,8 @@ const Dashboard = (props) => {
     setSelectedCategory(category);
   };
 
-  const { albums, artists, playlist } = props;
-  const result = { albums, artists, playlist };
+  const { albums, artists, playlist, song } = props;
+  const result = { albums, artists, playlist, song };
 
   return (
     <React.Fragment>
@@ -107,7 +114,8 @@ const mapStateToProps = (state) => {
   return {
     albums: state.albums,
     artists: state.artists,
-    playlist: state.playlist
+    playlist: state.playlist,
+    song: state.song
   };
 };
 

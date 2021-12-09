@@ -1,4 +1,5 @@
 import { SET_ALBUMS, ADD_ALBUMS } from '../utils/constants';
+
 const albumsReducer = (state = {}, action) => {
   const { albums } = action;
   switch (action.type) {
@@ -13,4 +14,6 @@ const albumsReducer = (state = {}, action) => {
     default:
       return state;
   }
-};export default albumsReducer;
+};
+
+export default albumsReducer;

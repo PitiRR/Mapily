@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { getTop50 } from '../actions/result.js'
+import { COUNTRY_ID } from '../utils/constants';
 
 const SearchForm = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,7 +11,7 @@ const SearchForm = (props) => {
     setSearchTerm(searchTerm);
   };
 
-  const handleSearch = (event) => {
+  const handlePlaylistSearch = (event, searchTerm) => {
     event.preventDefault();
 
     if (searchTerm.trim() !== '') {
@@ -21,9 +21,10 @@ const SearchForm = (props) => {
       setErrorMsg('Please enter a search term.');
     }
   };
+  
   return (
     <div>
-      <Form onSubmit={handleSearch}>
+      <Form onSubmit={(e) => {handlePlaylistSearch(e, COUNTRY_ID[searchTerm])}}>
         {errorMsg && <p className="errorMsg">{errorMsg}</p>}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Enter search term</Form.Label>
@@ -38,9 +39,6 @@ const SearchForm = (props) => {
         </Form.Group>
         <Button variant="info" type="submit">
           Search
-        </Button>
-        <Button variant="info" type="submit" onClick={getTop50("fr")}>
-          Get France Top 50
         </Button>
       </Form>
     </div>

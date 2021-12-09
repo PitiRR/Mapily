@@ -4,7 +4,9 @@ import {
   SET_ARTISTS,
   ADD_ARTISTS,
   SET_PLAYLIST,
-  ADD_PLAYLIST
+  ADD_PLAYLIST,
+  SET_SONG,
+  ADD_SONG
 } from '../utils/constants';
 import { get } from '../utils/api';
 
@@ -38,34 +40,24 @@ export const addPlaylist = (playlists) => ({
   playlists
 });
 
-export const initiateGetResult = (searchTerm) => {
-  return async (dispatch) => {
-    try {
-      const API_URL = `https://api.spotify.com/v1/search?query=${encodeURIComponent(
-        searchTerm
-      )}&type=album,playlist,artist`;
-      const result = await get(API_URL);
-      console.log(result);
-      const { albums, artists, playlists } = result;
-      dispatch(setAlbums(albums));
-      dispatch(setArtists(artists));
-      return dispatch(setPlayList(playlists));
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-};
+export const setSong = (songs) => ({
+  type: SET_SONG,
+  songs
+});
 
-export const getTop50 = (searchTerm) => {
+export const addSong = (songs) => ({
+  type: ADD_SONG,
+  songs
+});
+
+export const getPlaylistItems = (searchTerm) => {
   return async (dispatch) => {
     try {
-      const API_URL = `https://api.spotify.com/v1/search?query=${encodeURIComponent(
-        'Top 50 - France'
-      )}&type=playlist`;
+      const API_URL = `https://api.spotify.com/v1/playlists/${searchTerm}/tracks`;
       const result = await get(API_URL);
       console.log(result);
-      const { playlists } = result;
-      return dispatch(setPlayList(playlists));
+      const { songs } = result;
+      return dispatch(setSong(songs));
     } catch (error) {
       console.log('error', error);
     }
@@ -99,6 +91,17 @@ export const initiateLoadMorePlaylist = (url) => {
     try {
       const result = await get(url);
       return dispatch(addPlaylist(result.playlists));
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+};
+
+export const initiateLoadMoreSong = (url) => {
+  return async (dispatch) => {
+    try {
+      const result = await get(url);
+      return dispatch(addSong(result.songs));
     } catch (error) {
       console.log('error', error);
     }
