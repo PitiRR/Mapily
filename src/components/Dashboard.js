@@ -14,6 +14,7 @@ import SearchResult from './SearchResult';
 import SearchForm from './SearchForm';
 import Header from './Header';
 import Loader from './Loader';
+import Map from './Map';
 
 const Dashboard = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -95,6 +96,7 @@ const Dashboard = (props) => {
             selectedCategory={selectedCategory}
             isValidSession={isValidSession}
           />
+          <Map />
         </div>
       ) : (
         <Redirect

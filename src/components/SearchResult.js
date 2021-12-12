@@ -61,7 +61,7 @@ const SearchResult = (props) => {
             }`}
             onClick={() => setCategory('playlist')}
           >
-            PlayLists
+            Playlists
           </button>
         )}
         {!_.isEmpty(song.items) && (
