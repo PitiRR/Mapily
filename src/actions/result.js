@@ -56,8 +56,7 @@ export const getPlaylistItems = (searchTerm) => {
       const API_URL = `https://api.spotify.com/v1/playlists/${searchTerm}/tracks`;
       const result = await get(API_URL);
       console.log(result);
-      const { songs } = result;
-      return dispatch(setSong(songs));
+      return dispatch(setSong(result));
     } catch (error) {
       console.log('error', error);
     }
