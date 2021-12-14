@@ -16,3 +16,6 @@ This way you don't need to pull (get newest changes from remote (Github)), and y
 1. Clone the repistory with ```git clone https://github.com/PitiRR/Mapily.git```
 2. Update and download npm with ```npm update```
 3. Run the app with ```npm start```
+
+# Links
+* [Jira](https://mapily.atlassian.net/jira/software/projects/MAP/boards/1)
