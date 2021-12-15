@@ -24,15 +24,15 @@ const SearchForm = (props) => {
   
   return (
     <div>
-      <Form onSubmit={(e) => {handlePlaylistSearch(e, COUNTRY_ID[searchTerm])}}>
+      <Form onSubmit={(e) => {handlePlaylistSearch(e, COUNTRY_ID[searchTerm.toLowerCase()])}}>
         {errorMsg && <p className="errorMsg">{errorMsg}</p>}
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Enter search term</Form.Label>
+          <Form.Label>Enter country to find its trending songs</Form.Label>
           <Form.Control
             type="search"
             name="searchTerm"
             value={searchTerm}
-            placeholder="Search for album, artist or playlist"
+            placeholder="Search for songs"
             onChange={handleInputChange}
             autoComplete="off"
           />

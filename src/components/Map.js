@@ -1,29 +1,31 @@
 import { React, useState, useRef, useEffect } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { COUNTRY_ID } from '../utils/constants';
-mapboxgl.accessToken = 
-    'pk.eyJ1IjoiMTAwYWprIiwiYSI6ImNrd2RkdTdkbDBqMzIyb250dml4d3VwenEifQ.GmkIuJ6wK0F1hHuWz6ZECQ';
+const MAPBOX_AUTH_TOKEN = process.env
+mapboxgl.accessToken = `${MAPBOX_AUTH_TOKEN}`;
+//TODO: Fix env bs
+mapboxgl.accessToken = 'pk.eyJ1IjoiMTAwYWprIiwiYSI6ImNrd2RkdTdkbDBqMzIyb250dml4d3VwenEifQ.GmkIuJ6wK0F1hHuWz6ZECQ';
 
 const Map = (props) => {
     const mapContainer = useRef(null);
     const [lat, setLat] = useState(53.3813); //Maynooth
-    const [lng, setLng] = useState(6.5918);
-    const [zoom, setZoom] = useState(3.5);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [lng, setLng] = useState(-6.5918);
+    const [zoom, setZoom] = useState(4);
     const [errorMsg, setErrorMsg] = useState('');
-    const mapStyle = 'mapbox://styles/100ajk/ckwddf1ub1v3d15su905hd0sk';
+    const mapStyle = 'mapbox://styles/100ajk/ckwddf1ub1v3d15su905hd0sk?optimize=true';
+
+    const handlePlaylistSearch = (event, searchTerm) => {
+        event.preventDefault();
+    
+        if (searchTerm.trim() !== '') {
+          setErrorMsg('');
+          props.handleSearch(searchTerm);
+        } else {
+          setErrorMsg('Please enter a search term.');
+        }
+      };
 
     useEffect(() => {
-        const handlePlaylistSearch = (event, searchTerm) => {
-            event.preventDefault();
-        
-            if (searchTerm.trim() !== '') {
-              setErrorMsg('');
-              props.handleSearch(searchTerm);
-            } else {
-              setErrorMsg('Please enter a search term.');
-            }
-        };
         const map = new mapboxgl.Map({
             container: mapContainer.current,
             style: mapStyle,
@@ -84,7 +86,11 @@ const Map = (props) => {
             map.on("click", function (e) {
                 var features = map.queryRenderedFeatures(e.point, { layers: ["state-fills"] });
                 if (features.length) {
-                    handlePlaylistSearch(e, COUNTRY_ID[(features[0].properties.name).toLowerCase()])
+                    try {
+                        handlePlaylistSearch(e, COUNTRY_ID[features[0].properties.name.toLowerCase()])
+                    } catch {
+                        setErrorMsg('Sorry! Data for this country is unavailable.')
+                    }
                 }
             });
         });
