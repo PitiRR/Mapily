@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-
-import {
-//  initiateGetResult,
-  initiateLoadMoreAlbums,
-  initiateLoadMorePlaylist,
-  initiateLoadMoreArtists,
-  initiateLoadMoreSong,
-  getPlaylistItems
-} from '../actions/result';
+import { initiateLoadMoreSong, getPlaylistItems } from '../actions/result';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SearchResult from './SearchResult';
@@ -47,23 +39,9 @@ const Dashboard = (props) => {
 
   const loadMore = async (type) => {
     if (isValidSession()) {
-      const { dispatch, albums, artists, playlist, song } = props;
+      const { dispatch, song } = props;
       setIsLoading(true);
-      switch (type) {
-        case 'albums':
-          await dispatch(initiateLoadMoreAlbums(albums.next));
-          break;
-        case 'artists':
-          await dispatch(initiateLoadMoreArtists(artists.next));
-          break;
-        case 'playlist':
-          await dispatch(initiateLoadMorePlaylist(playlist.next));
-          break;
-        case 'song':
-          await dispatch(initiateLoadMoreSong(song.next));
-          break;
-        default:
-      }
+      await dispatch(initiateLoadMoreSong(song.next));
       setIsLoading(false);
     } else {
       history.push({
@@ -79,8 +57,8 @@ const Dashboard = (props) => {
     setSelectedCategory(category);
   };
 
-  const { albums, artists, playlist, song } = props;
-  const result = { albums, artists, playlist, song };
+  const { song } = props;
+  const result = {  song };
 
   return (
     <React.Fragment>
@@ -96,7 +74,7 @@ const Dashboard = (props) => {
             selectedCategory={selectedCategory}
             isValidSession={isValidSession}
           />
-          <Map />
+          <Map handleSearch={handleSearch}/>
         </div>
       ) : (
         <Redirect
