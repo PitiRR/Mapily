@@ -67,6 +67,10 @@ const Dashboard = (props) => {
           <Header />
           <SearchForm handleSearch={handleSearch} />
           <Loader show={isLoading}>Loading...</Loader>
+          <Map 
+            handleSearch={handleSearch}
+            id='map'
+            />
           <SearchResult
             result={result}
             loadMore={loadMore}
@@ -74,7 +78,6 @@ const Dashboard = (props) => {
             selectedCategory={selectedCategory}
             isValidSession={isValidSession}
           />
-          <Map handleSearch={handleSearch}/>
         </div>
       ) : (
         <Redirect

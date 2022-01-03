@@ -6,10 +6,10 @@ mapboxgl.accessToken =
 
 const Map = (props) => {
     const mapContainer = useRef(null);
+    const map = useRef(null);
     const [lat, setLat] = useState(53.3813); //Maynooth
     const [lng, setLng] = useState(6.5918);
     const [zoom, setZoom] = useState(3.5);
-    const [searchTerm, setSearchTerm] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const mapStyle = 'mapbox://styles/100ajk/ckwddf1ub1v3d15su905hd0sk';
 
@@ -24,18 +24,24 @@ const Map = (props) => {
               setErrorMsg('Please enter a search term.');
             }
         };
-        const map = new mapboxgl.Map({
+        if (map.current) return;
+        map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: mapStyle,
             center: [lng, lat],
             zoom: zoom
         });
-        map.on('load', function () {
-            map.addSource("states", {
-                "type": "geojson",
-                "data": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson"
+        map.current.on('load', function () {
+            map.current.resize();
+            map.current.addSource("mapbox.country-boundaries-v1", {
+                type: 'vector',
+                url: 'mapbox://mapbox.country-boundaries-v1'
             });
-            map.addLayer({
+            map.current.addSource("states", {
+                'type': 'geojson',
+                'data': 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson'
+            });
+            map.current.addLayer({
                 "id": "state-fills",
                 "type": "fill",
                 "source": "states",
@@ -45,7 +51,7 @@ const Map = (props) => {
                     "fill-opacity": 0
                 }
             });
-            map.addLayer({
+            map.current.addLayer({
                 "id": "state-borders",
                 "type": "line",
                 "source": "states",
@@ -55,7 +61,7 @@ const Map = (props) => {
                     "line-width": 0
                 }
             });
-            map.addLayer({
+            map.current.addLayer({
                 "id": "state-fills-hover",
                 "type": "fill",
                 "source": "states",
@@ -66,29 +72,43 @@ const Map = (props) => {
                 },
                 "filter": ["==", "name", ""]
             });
-            map.on("mousemove", function (e) {
-                var features = map.queryRenderedFeatures(e.point, { layers: ["state-fills"] });
+            map.current.on("mousemove", function (e) {
+                var features = map.current.queryRenderedFeatures(e.point, { layers: ["state-fills"] });
                 if (features.length) {
-                    map.getCanvas().style.cursor = 'pointer';
-                    map.setFilter("state-fills-hover", ["==", "name", features[0].properties.name]);
+                    map.current.getCanvas().style.cursor = 'pointer';
+                    map.current.setFilter("state-fills-hover", ["==", "name", features[0].properties.name]);
                 } else {
-                    map.setFilter("state-fills-hover", ["==", "name", ""]);
-                    map.getCanvas().style.cursor = '';
+                    map.current.setFilter("state-fills-hover", ["==", "name", ""]);
+                    map.current.getCanvas().style.cursor = '';
                 }
             });
             // Reset the state-fills-hover layer's filter when the mouse leaves the map
-            map.on("mouseout", function () {
-                map.getCanvas().style.cursor = 'auto';
-                map.setFilter("state-fills-hover", ["==", "name", ""]);
+            map.current.on("mouseout", function () {
+                map.current.getCanvas().style.cursor = 'auto';
+                map.current.setFilter("state-fills-hover", ["==", "name", ""]);
             });
-            map.on("click", function (e) {
-                var features = map.queryRenderedFeatures(e.point, { layers: ["state-fills"] });
+            map.current.on("click", function (e) {
+                var features = map.current.queryRenderedFeatures(e.point, { layers: ["state-fills"] });
                 if (features.length) {
-                    handlePlaylistSearch(e, COUNTRY_ID[(features[0].properties.name).toLowerCase()])
+                    //window.alert(`Selected country:\n${features[0].properties.name.replace(' ', '_').toLowerCase()}`)
+                    handlePlaylistSearch(e, COUNTRY_ID[(features[0].properties.name).replace(' ', '_').toLowerCase()])
+                    /* TODO:
+                    Make this work to work on countries. Documentation but with points, not polygons/set of different points:
+                        * https://docs.mapbox.com/mapbox-gl-js/example/center-on-feature/
+                    map.flyTo({
+                        center: features[0].geometry.coordinates
+                    });
+                    */
+                    /* TODO:
+                    Create a 'pop up'/context menu to show up here, with song results
+                        * https://docs.mapbox.com/mapbox-gl-js/example/popup/
+                        * https://stackoverflow.com/questions/48077141/how-to-add-a-custom-context-menu-to-the-map
+                    */
                 }
             });
         });
     });
+    
     return (
         <div>
             <div ref={mapContainer} className="map-container" />
