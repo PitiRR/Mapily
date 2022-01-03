@@ -9,6 +9,7 @@ export const ADD_SONG = 'ADD_SONG';
 //can be obtained in Spotify client using "copy link" or "embed playlist"
 //some are called "Viral 50". They're also made by Spotify, though
 export const COUNTRY_ID = {
+    "global": "37i9dQZEVXbLiRSasKsNU9",
     "andorra": "37i9dQZEVXbMxjQJh4Um8T",
     "argentina": "37i9dQZEVXbMMy2roB9myp",
     "australia": "37i9dQZEVXbJPcfkRz0wJ0",
@@ -22,9 +23,9 @@ export const COUNTRY_ID = {
     "colombia": "37i9dQZEVXbOa2lmxNORXQ",
     "costa_rica": "37i9dQZEVXbMZAjGMynsQX",
     "cyprus": "37i9dQZEVXbNBxnXSWuAcX",
-    "czech_republic": "37i9dQZEVXbIP3c3fqVrJY",
+    "czech_rep.": "37i9dQZEVXbIP3c3fqVrJY",
     "denmark": "37i9dQZEVXbL3J0k32lWnN",
-    "dominican_republic": "37i9dQZEVXbKAbrMR8uuf7",
+    "dominican_rep.": "37i9dQZEVXbKAbrMR8uuf7",
     "ecuador": "37i9dQZEVXbJlM6nvL1nD1",
     "egypt": "37i9dQZEVXbLn7RQmT5Xv2",
     "el_salvador": "37i9dQZEVXbLxoIml4MYkT",
@@ -44,9 +45,10 @@ export const COUNTRY_ID = {
     "iceland": "37i9dQZEVXbKMzVsSGQ49S",
     "italy": "37i9dQZEVXbIQnj7RRhdSX",
     "japan": "37i9dQZEVXbKXQ4mDTEBXq",
-    "south_korea": "37i9dQZEVXbNxXF4SkHj9F",
-    "lithuania": "37i9dQZEVXbMx56Rdq5lwc",
+    "korea": "37i9dQZEVXbNxXF4SkHj9F",
     "latvia": "37i9dQZEVXbJWuzDrTxbKS",
+    "lithuania": "37i9dQZEVXbMx56Rdq5lwc",
+    "luxembourg": "37i9dQZEVXbJ9SRaVj0yDF",
     "morocco": "37i9dQZEVXbJU9eQpX8gPT",
     "mexico": "37i9dQZEVXbO3qyFxbkOE1",
     "malaysia": "37i9dQZEVXbJlfUljuZExa",
@@ -74,5 +76,8 @@ export const COUNTRY_ID = {
     "taiwan": "37i9dQZEVXbMnZEatlMSiu",
     "ukraine": "37i9dQZEVXbKkidEfWYRuD",
     "uruguay": "37i9dQZEVXbMJJi3wgRbAy",
+    "united_kingdom": "37i9dQZEVXbL3DLHfQeDmV",
+    "united_states": "37i9dQZEVXbKuaTI1Z1Afx",
+    "uae": "37i9dQZEVXbN6kflPvZZn0",
     "vietnam": "37i9dQZEVXbLdGSmz6xilI"
 };

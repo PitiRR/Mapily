@@ -27,7 +27,7 @@ const SongList = ({ song }) => {
                   <Card.Body>
                     <Card.Title>{item.track.name}</Card.Title>
                     <Card.Text>
-                      <small>By {item.track.name}</small><br></br>
+                      <small>By {[item.track.artists[0].name]}</small><br></br>
                       <small>Album {item.track.album.name}</small>
                     {item.track.explicit === 'true' && (
                         <small>Explicit</small>
