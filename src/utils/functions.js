@@ -21,3 +21,5 @@ export const setAuthHeader = () => {
     console.log('Error setting auth', error);
   }
 };
+export const getGeoCenter = () => {
+};
