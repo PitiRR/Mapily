@@ -14,12 +14,13 @@ This way you don't need to pull (get newest changes from remote (Github)), and y
 4. To update changes in your branch after ```git add```; ```git commit --amend --no-edit```. This amends the current Commit instead of creating a 2nd one, and makes no edits to the commit message. To push: ```git push --force```. This forces Github to accept those changes to an already existing commit. 
 ## Issues & Spikes
 ### Re-rendering of the map
-* The issue is present when a change is made to the source code (specifically, related to the Map component) while the App is running on the server.
-* Outside development, this is not an issue - when the App has completed Development, changes will not be made anymore. If they will, the server will go down for the time of implementing changes.
+* The issue is present when a change is made to the source code (specifically, related to the Map component, ie. rerendering the Dashboard component would also rerender the Map again) while the App is running on the server.
+* Outside development, this is not an issue - when the App has completed Development, changes will not be made anymore. If they will, the server will go down for the time of an update.
 ### Optimising the map with vector tileset
 * The issue stems from the fact that geojson-based maps are slower than vector ones. However, upon trial and error as well as searching for documentation, I have stumbled upon this page: [Create a hover effect](https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/). The documentation clearly shows using a geojson dataset as source, even though everywhere else mapbox recommends using vectors when possible.
-* It appears that unfortunately, the website will not be quicker as we have hoped for.
-* I am leaving addSource with the vector as an artifact.
+* Specifically, layers and events are not working with a vector source. Data on the layers is taken from the geojson, and even with double-source render (which defeats the purpose in the first place). Unforutnately, I am not aware of any way to see _under the hood_ of a tileset. 
+* It appears that unfortunately, the website will not be as quick as we have hoped for.
+* I am leaving commented addSource with the vector as an artifact.
 # How to run
 ## Prerequisites:
 1. A Spotify account

@@ -3,7 +3,6 @@ import { initiateLoadMoreSong, getPlaylistItems } from '../actions/result';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SearchResult from './SearchResult';
-import SearchForm from './SearchForm';
 import Header from './Header';
 import Loader from './Loader';
 import Map from './Map';
@@ -65,7 +64,6 @@ const Dashboard = (props) => {
       {isValidSession() ? (
         <div>
           <Header />
-          <SearchForm handleSearch={handleSearch} />
           <Loader show={isLoading}>Loading...</Loader>
           <Map 
             handleSearch={handleSearch}

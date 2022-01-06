@@ -1,6 +1,7 @@
 import { React, useState, useRef, useEffect } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { COUNTRY_ID } from '../utils/constants';
+import { getGeoCenter } from '../utils/functions';
 mapboxgl.accessToken = 
     'pk.eyJ1IjoiMTAwYWprIiwiYSI6ImNrd2RkdTdkbDBqMzIyb250dml4d3VwenEifQ.GmkIuJ6wK0F1hHuWz6ZECQ';
 
@@ -29,7 +30,8 @@ const Map = (props) => {
             container: mapContainer.current,
             style: mapStyle,
             center: [lng, lat],
-            zoom: zoom
+            zoom: zoom,
+            attributionControl: false
         });
         map.current.on('load', function () {
             map.current.resize();
@@ -95,10 +97,10 @@ const Map = (props) => {
                     /* TODO:
                     Make this work to work on countries. Documentation but with points, not polygons/set of different points:
                         * https://docs.mapbox.com/mapbox-gl-js/example/center-on-feature/
-                    map.flyTo({
-                        center: features[0].geometry.coordinates
-                    });
                     */
+                    map.current.flyTo({
+                        center: getGeoCenter(features[0].geometry.coordinates)
+                    });
                     /* TODO:
                     Create a 'pop up'/context menu to show up here, with song results
                         * https://docs.mapbox.com/mapbox-gl-js/example/popup/
@@ -107,11 +109,12 @@ const Map = (props) => {
                 }
             });
         });
-    });
+        return () => map.current.remove();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
     
     return (
         <div>
-            <div ref={mapContainer} className="map-container" />
+            <div style={{width: '100vw', height: '100vh'}} ref={mapContainer} className="map-container" />
         </div>
     );
 }
