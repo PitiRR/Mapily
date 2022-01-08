@@ -10,22 +10,21 @@ import Map from './Map';
 const Dashboard = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('song');
+  const [errorMsg, setErrorMsg] = useState('');
   const { isValidSession, history } = props;
 
   const handleSearch = (searchTerm) => {
     if (isValidSession()) {
       setIsLoading(true);
-      //get songs, albums and playlists based on text query
-      // props.dispatch(initiateGetResult(searchTerm)).then(() => {
-      //   setIsLoading(false);
-      //   setSelectedCategory('albums');
-      //});
-
+      try {
       //get playlist items for a specific (trending 50) playlist
        props.dispatch(getPlaylistItems(searchTerm)).then(() => {
          setIsLoading(false);
          setSelectedCategory('song');
         });
+      } catch (error) {
+        setErrorMsg("Sorry! No available data for this country.");
+      }
     } else {
       history.push({
         pathname: '/',
@@ -93,9 +92,6 @@ const Dashboard = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    albums: state.albums,
-    artists: state.artists,
-    playlist: state.playlist,
     song: state.song
   };
 };
