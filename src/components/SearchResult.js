@@ -27,7 +27,6 @@ const SearchResult = (props) => {
       />
     );
   }
-
   return (
     <React.Fragment>
       <div className="search-buttons">

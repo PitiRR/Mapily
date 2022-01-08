@@ -1,7 +1,6 @@
 import { React, useState, useRef, useEffect } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { COUNTRY_ID } from '../utils/constants';
-import { getGeoCenter } from '../utils/functions';
 mapboxgl.accessToken = 
     'pk.eyJ1IjoiMTAwYWprIiwiYSI6ImNrd2RkdTdkbDBqMzIyb250dml4d3VwenEifQ.GmkIuJ6wK0F1hHuWz6ZECQ';
 
@@ -12,18 +11,21 @@ const Map = (props) => {
     const [lng, setLng] = useState(6.5918);
     const [zoom, setZoom] = useState(3.5);
     const [errorMsg, setErrorMsg] = useState('');
-    const mapStyle = 'mapbox://styles/100ajk/ckwddf1ub1v3d15su905hd0sk';
+    const mapStyle = 'mapbox://styles/100ajk/ckwddf1ub1v3d15su905hd0sk?optimize=true';
 
     useEffect(() => {
         const handlePlaylistSearch = (event, searchTerm) => {
             event.preventDefault();
-        
+        try {
             if (searchTerm.trim() !== '') {
               setErrorMsg('');
               props.handleSearch(searchTerm);
             } else {
               setErrorMsg('Please enter a search term.');
             }
+        } catch (error) {
+            setErrorMsg('Sorry! No available data for this country.');
+        }
         };
         if (map.current) return;
         map.current = new mapboxgl.Map({
@@ -35,13 +37,13 @@ const Map = (props) => {
         });
         map.current.on('load', function () {
             map.current.resize();
-            map.current.addSource("mapbox.country-boundaries-v1", {
-                type: 'vector',
-                url: 'mapbox://mapbox.country-boundaries-v1'
-            });
+            // map.current.addSource("mapbox.country-boundaries-v1", {
+            //     type: 'vector',
+            //     url: 'mapbox://mapbox.country-boundaries-v1'
+            // });
             map.current.addSource("states", {
                 'type': 'geojson',
-                'data': 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson'
+                'data': 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson?optimize=true'
             });
             map.current.addLayer({
                 "id": "state-fills",
@@ -92,20 +94,22 @@ const Map = (props) => {
             map.current.on("click", function (e) {
                 var features = map.current.queryRenderedFeatures(e.point, { layers: ["state-fills"] });
                 if (features.length) {
-                    //window.alert(`Selected country:\n${features[0].properties.name.replace(' ', '_').toLowerCase()}`)
                     handlePlaylistSearch(e, COUNTRY_ID[(features[0].properties.name).replace(' ', '_').toLowerCase()])
-                    /* TODO:
-                    Make this work to work on countries. Documentation but with points, not polygons/set of different points:
-                        * https://docs.mapbox.com/mapbox-gl-js/example/center-on-feature/
-                    */
+                    let coordinates = e.lngLat;
                     map.current.flyTo({
-                        center: getGeoCenter(features[0].geometry.coordinates)
+                        center: coordinates,
+                        zoom: 4
                     });
                     /* TODO:
                     Create a 'pop up'/context menu to show up here, with song results
                         * https://docs.mapbox.com/mapbox-gl-js/example/popup/
                         * https://stackoverflow.com/questions/48077141/how-to-add-a-custom-context-menu-to-the-map
+                        * https://stackoverflow.com/questions/67699692/popup-displays-outside-of-the-map-using-mapbox-api-in-react
                     */
+                    const popup = new mapboxgl.Popup({ closeOnClick: true })
+                        .setLngLat(coordinates)
+                        .setHTML('<h1>Hello World!</h1>')
+                        .addTo(map.current);
                 }
             });
         });

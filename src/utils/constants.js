@@ -1,13 +1,8 @@
-export const SET_ALBUMS = 'SET_ALBUMS';
-export const ADD_ALBUMS = 'ADD_ALBUMS';
-export const SET_ARTISTS = 'SET_ARTISTS';
-export const ADD_ARTISTS = 'ADD_ARTISTS';
-export const SET_PLAYLIST = 'SET_PLAYLIST';
-export const ADD_PLAYLIST = 'ADD_PLAYLIST';
 export const SET_SONG = 'SET_SONG';
 export const ADD_SONG = 'ADD_SONG';
+
 //can be obtained in Spotify client using "copy link" or "embed playlist"
-//some are called "Viral 50". They're also made by Spotify, though
+//some are called "Viral 50". They're also made by Spotify, and fwiw they're identical in purpose
 export const COUNTRY_ID = {
     "global": "37i9dQZEVXbLiRSasKsNU9",
     "andorra": "37i9dQZEVXbMxjQJh4Um8T",
