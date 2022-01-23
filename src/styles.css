@@ -19,6 +19,7 @@
     letter-spacing: 1px;
   }
   
+
   .login {
     display: flex;
     flex-direction: column;
@@ -47,6 +48,10 @@
     box-shadow:none !important;
   }
   
+  .subheading{
+    color: rgb(201, 201, 201);
+  }
+
   .main {
     width: 90%;
     /* margin: 1rem auto; */
