@@ -108,6 +108,7 @@
     background: #fff0f0;
     padding: 0.5rem;
     margin-top: 0.5rem;
+    z-index: 999;
   }
   
   .search-buttons {
@@ -175,10 +176,12 @@
     width: 100%;
     height: 100%;
   }
-
-  .mapboxgl-popup {
+  .mapboxgl-popup-close-button {
+    display: none;
+  }
+  /* .mapboxgl-popup {
     max-width: 400px;
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     z-index:-1;
     position:relative;
-  }
+  } */

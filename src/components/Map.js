@@ -12,16 +12,33 @@ const Map = (props) => {
     const [zoom, setZoom] = useState(3.5);
     const [errorMsg, setErrorMsg] = useState('');
     const mapStyle = 'mapbox://styles/100ajk/ckwddf1ub1v3d15su905hd0sk?optimize=true';
+    // var isData = props.isData
 
     useEffect(() => {
+        // const getThisPopupShit = (event, props) => {
+        //     event.preventDefault();
+        //     try {          
+        //         <SearchResult
+        //             result={props.result}
+        //             loadMore={props.loadMore}
+        //             setCategory={props.setCategory}
+        //             selectedCategory={props.selectedCategory}
+        //             isValidSession={props.isValidSession}
+        //         />
+        //     } catch (error) {
+        //         return (
+        //             <h3>Sorry!
+        //                 No data available for this country.
+        //             </h3>
+        //         );
+        //     }
+        // }
         const handlePlaylistSearch = (event, searchTerm) => {
             event.preventDefault();
         try {
             if (searchTerm.trim() !== '') {
               setErrorMsg('');
               props.handleSearch(searchTerm);
-            } else {
-              setErrorMsg('Please enter a search term.');
             }
         } catch (error) {
             setErrorMsg('Sorry! No available data for this country.');
@@ -98,18 +115,32 @@ const Map = (props) => {
                     let coordinates = e.lngLat;
                     map.current.flyTo({
                         center: coordinates,
-                        zoom: 4
+                        zoom: 5
                     });
+                    /* TODO:
+                        * Center on the geographical centre of a country to bounds, not at click.
+                        * Check out lnglatbounds()
+                        * https://docs.mapbox.com/mapbox-gl-js/example/fitbounds/
+                    let bounds = coordinates.reduce(function(bounds, coord) {
+                        return bounds.extend(coord);
+                    }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
+                    map.current.fitBounds(bounds, {
+                    });
+                    /*
                     /* TODO:
                     Create a 'pop up'/context menu to show up here, with song results
                         * https://docs.mapbox.com/mapbox-gl-js/example/popup/
                         * https://stackoverflow.com/questions/48077141/how-to-add-a-custom-context-menu-to-the-map
                         * https://stackoverflow.com/questions/67699692/popup-displays-outside-of-the-map-using-mapbox-api-in-react
                     */
-                    const popup = new mapboxgl.Popup({ closeOnClick: true })
-                        .setLngLat(coordinates)
-                        .setHTML('<h1>Hello World!</h1>')
-                        .addTo(map.current);
+                    // if(!isData) {
+                    //     const popup = new mapboxgl.Popup({ closeOnClick: true })
+                    //         .setLngLat(coordinates)
+                    //         .setHTML("<div><center><h2>Sorry!</h2><br /><p>No data is available for this country.</p></center></div>")
+                    //         .addTo(map.current);
+                    // }
+                    // console.log(isData)
                 }
             });
         });
