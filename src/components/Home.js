@@ -29,9 +29,12 @@ const Home = (props) => {
           <Header />
           {sessionExpired && (
             <Alert variant="info">Session expired. Please login again.</Alert>
-          )}
-          <Button variant="info" type="submit" onClick={handleLogin}>
-            Login to spotify
+          )} 
+          <h3 className='subheading'>Click below to connect your spotify account and get started!</h3>
+          <br/>
+          <br/>
+          <Button variant="submit" type="submit" className="btn btn-login" onClick={handleLogin}>
+          &nbsp; Login to Spotify &nbsp;
           </Button>
         </div>
       )}

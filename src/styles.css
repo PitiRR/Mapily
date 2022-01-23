@@ -7,7 +7,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: #f3f4f6;
+    background: #242424;
     font-family: 'Montserrat', -apple-system, system-ui, BlinkMacSystemFont,
       'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-size: 20px;
@@ -19,6 +19,7 @@
     letter-spacing: 1px;
   }
   
+
   .login {
     display: flex;
     flex-direction: column;
@@ -29,7 +30,28 @@
   .login .btn {
     font-size: 1.2rem;
   }
+
+  .btn-login{
+    background-color: #1DB954;
+    color: white;
+    border-radius: 50px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+  }
+
+  .btn-login:hover{
+  background-color: #1ed75f;
+  color: white;
+  }
+
+  .btn-login:focus{
+    box-shadow:none !important;
+  }
   
+  .subheading{
+    color: rgb(201, 201, 201);
+  }
+
   .main {
     width: 90%;
     /* margin: 1rem auto; */
@@ -41,6 +63,10 @@
   
   .main-heading {
     margin: 2rem 0;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    background-color: #242424;
+    color: white;
   }
   
   .hide {
